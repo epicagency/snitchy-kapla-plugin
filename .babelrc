@@ -1,0 +1,24 @@
+{
+  "env": {
+    "commonjs": {
+      "presets": ["@babel/env"]
+    },
+    "esm": {
+      "presets": [
+        ["@babel/env", {
+          "modules": false
+        }]
+      ]
+    },
+    "umd": {
+      "presets": ["@babel/env"]
+    },
+    "test": {
+      "presets": [
+        ["@babel/env", {
+          "modules": "commonjs"
+        }]
+      ]
+    }
+  }
+}
