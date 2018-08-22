@@ -58,7 +58,7 @@ export default class SnitchyKaplaPlugin {
         } else {
           const htmlAttr = utils.kebabCase(attr);
 
-          return scope.$el.attr || scope.$el.getAttribute(htmlAttr) || trim(scope.$el[attr]);
+          return ref.attr || ref.getAttribute(htmlAttr) || trim(ref[attr]);
         }
 
         return null;
