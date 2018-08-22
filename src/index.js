@@ -29,7 +29,8 @@ export default class SnitchyKaplaPlugin {
     this.name = 'SnitchyPlugin';
     this.snitchy = snitchy;
     this.variables = snitchy.variables.components;
-    this.triggersBySlug = new Multimap();
+    this.triggersByElement = new Multimap();
+    this.listenersByElement = new Multimap();
   }
   init() {
     this.snitchy.addPrefix('el', {
@@ -67,42 +68,58 @@ export default class SnitchyKaplaPlugin {
   }
   bindAll(instance, events) {
     const { slug, context } = instance;
+    const { element } = context;
+
+    // Get data for slug…
     const data = this.variables[slug];
 
     if (data) {
-      this.triggers = [];
-
-      // Get variables with trigger
+      // Get variables with trigger property.
       const variables = Object
         .keys(data)
         .map(description => data[description])
         .filter(block => block.trigger);
       const variablesByTrigger = groupBy(variables, 'trigger');
 
+      // Store all triggers for this element.
+      // Triggers used inside the component element will be "triggered" after "handleEvent".
+      // If trigger is NOT used inside the component,
+      // create, add and store specific listener for this element
       Object.keys(variablesByTrigger).forEach(trigger => {
-        this.triggersBySlug.add(slug, trigger);
+        this.triggersByElement.add(element, trigger);
         if (!events.includes(trigger)) {
-          this.triggers.push(trigger);
-          context.element.addEventListener(
-            trigger,
-            this.snitchy.component.bind(this.snitchy, slug, null, instance, trigger)
-          );
+          const listener = this.snitchy.component.bind(this.snitchy, slug, null, instance, trigger);
+
+          element.addEventListener(trigger, listener);
+          this.listenersByElement.add(element, listener);
         }
       });
     }
   }
-  unbindAll(instance) {
+  unbindAll(instance, events) {
     const { context } = instance;
+    const { element } = context;
 
-    this.triggers.forEach(trigger => {
-      context.element.removeEventListener(trigger);
+    // Delete all triggers for this element.
+    // If element has triggers NOT used inside the component (and then specific listeners),
+    // remove and delete listeners for this element.
+    this.triggersByElement.getValuesForKey(element).forEach(trigger => {
+      this.triggersByElement.delete(element, trigger);
+      if (!events.includes(trigger)) {
+        const listeners = this.listenersByElement.getValuesForKey(element);
+
+        listeners.forEach(listener => {
+          element.removeEventListener(trigger, listener);
+          this.listenersByElement.delete(element, listener);
+        });
+      }
     });
   }
   handleEvent(instance, e) {
     const { slug } = instance;
     const { type: trigger } = e;
 
-    if (this.triggersBySlug.has(slug, trigger)) {
+    if (this.triggersByElement.has(slug, trigger)) {
       this.snitchy.component(slug, null, instance, trigger);
     }
   }

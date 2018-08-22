@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.0.3] _(22/08/2018)_
+
+### Fixed
+
+- Manage events / listeners by element
+
 ## [0.0.2] _(22/08/2018)_
 
 ### Fixed
