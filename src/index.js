@@ -67,7 +67,7 @@ export default class SnitchyKaplaPlugin {
     });
   }
   bindAll(instance, events) {
-    const { slug, context } = instance;
+    const { context, slug } = instance;
     const { element } = context;
 
     // Get data for slug…
@@ -116,10 +116,11 @@ export default class SnitchyKaplaPlugin {
     });
   }
   handleEvent(instance, e) {
-    const { slug } = instance;
+    const { context, slug } = instance;
+    const { element } = context;
     const { type: trigger } = e;
 
-    if (this.triggersByElement.has(slug, trigger)) {
+    if (this.triggersByElement.has(element, trigger)) {
       this.snitchy.component(slug, null, instance, trigger);
     }
   }
