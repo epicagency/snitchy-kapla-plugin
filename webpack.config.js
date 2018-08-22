@@ -33,6 +33,7 @@ const config = {
   plugins: [
     new BundleAnalyzerPlugin({
       analyzerMode: 'static',
+      openAnalyzer: false,
       reportFilename: '../report.html',
     }),
   ],
