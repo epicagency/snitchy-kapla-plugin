@@ -24,7 +24,7 @@ function groupBy(obj, key) {
   }, {});
 }
 
-export class SnitchyKaplaPlugin {
+export default class SnitchyKaplaPlugin {
   constructor(snitchy) {
     this.name = 'SnitchyPlugin';
     this.snitchy = snitchy;
