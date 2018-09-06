@@ -15,7 +15,7 @@ const config = {
     umdNamedDefine: true,
   },
   resolve: {
-    mainFields: ['module', 'browser', 'main'],
+    mainFields: ['browser', 'main', 'module'],
   },
   mode: isProd ? 'production' : 'development',
   optimization: {
