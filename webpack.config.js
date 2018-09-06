@@ -10,7 +10,7 @@ const config = {
   entry: './src/index.js',
   output: {
     filename: isProd ? 'snitchy-kapla-plugin.min.js' : 'snitchy-kapla-plugin.js',
-    library: 'snitchy-kapla-plugin',
+    library: 'Snitchy Kapla Plugin',
     libraryTarget: 'umd',
     umdNamedDefine: true,
   },

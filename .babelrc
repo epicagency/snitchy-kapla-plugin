@@ -1,7 +1,16 @@
 {
   "env": {
     "commonjs": {
-      "presets": ["@babel/env"]
+      "presets": [
+        ["@babel/env", {
+          "targets": {
+            "browsers": [
+              "last 2 versions",
+              "ie >= 11"
+            ]
+          }
+        }]
+      ]
     },
     "esm": {
       "presets": [
@@ -11,7 +20,17 @@
       ]
     },
     "umd": {
-      "presets": ["@babel/env"]
+      "presets": [
+        ["@babel/env", {
+          "modules": "commonjs",
+          "targets": {
+            "browsers": [
+              "last 2 versions",
+              "ie >= 11"
+            ]
+          }
+        }]
+      ]
     },
     "test": {
       "presets": [
