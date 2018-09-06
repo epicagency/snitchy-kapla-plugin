@@ -1,6 +1,6 @@
 {
   "name": "snitchy-kapla-plugin",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Add prefixes (`$el`, `$ref`) and triggers for Kapla(https://github.com/thierrymichel/kapla) components",
   "homepage": "https://github.com/epicagency/snitchy-kapla-plugin",
   "main": "lib/index.js",
